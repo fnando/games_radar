@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{games_radar}
-  s.version = "0.1.0"
+  s.version = "0.1.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Nando Vieira"]
-  s.date = %q{2010-02-16}
+  s.date = %q{2010-02-17}
   s.description = %q{GamesRadar is an API wrapper for the games website http://gamesradar.com}
   s.email = %q{fnando.vieira@gmail.com}
   s.extra_rdoc_files = [
