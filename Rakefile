@@ -1,6 +1,8 @@
+require "jeweler"
 require "rcov/rcovtask"
 require "rake/testtask"
 require "hanna/rdoctask"
+require "lib/games_radar/version"
 
 Rcov::RcovTask.new do |t|
   t.test_files = FileList["test/**/*_test.rb"]
@@ -24,4 +26,16 @@ Rake::RDocTask.new do |rdoc|
   rdoc.options += %w[ --line-numbers --inline-source --charset utf-8 ]
   rdoc.rdoc_files.include("README.rdoc", "CHANGELOG.rdoc")
   rdoc.rdoc_files.include("lib/**/*.rb")
+end
+
+JEWEL = Jeweler::Tasks.new do |gem|
+  gem.name = "games_radar"
+  gem.email = "fnando.vieira@gmail.com"
+  gem.homepage = "http://github.com/fnando/games_radar"
+  gem.authors = ["Nando Vieira"]
+  gem.version = GamesRadar::Version::STRING
+  gem.summary = "GamesRadar is an API wrapper for the games website http://gamesradar.com"
+  gem.description = "GamesRadar is an API wrapper for the games website http://gamesradar.com"
+  gem.add_dependency "nokogiri"
+  gem.files =  FileList["{README,CHANGELOG}.rdoc", "{lib,test}/**/*"]
 end
