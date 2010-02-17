@@ -24,6 +24,14 @@ module GamesRadar
       :filter => :game_name
     }
 
+    class << self
+      # Hold the latest response.
+      attr_accessor :response
+
+      # Hold the latest uri.
+      attr_accessor :uri
+    end
+
     # Make a API request processing the provided parameters and
     # merging the API key in every request.
     #
@@ -33,8 +41,9 @@ module GamesRadar
     #     # do whatever you want with the response XML
     #   end
     def request(path, params = {}, &block)
-      uri = uri_for(path, params.dup)
-      xml = Nokogiri::XML(open(uri).read)
+      GamesRadar::Request.uri = uri_for(path, params.dup)
+      GamesRadar::Request.response = open(GamesRadar::Request.uri)
+      xml = Nokogiri::XML(GamesRadar::Request.response.read)
 
       handle_exceptions! xml
 
@@ -43,7 +52,7 @@ module GamesRadar
 
     # Raise exception when XML contains known error codes
     def handle_exceptions!(xml) # :nodoc:
-      case xml.search("error > code").inner_text.to_i
+      case xml.search("error > code").text.to_i
       when 10001 then raise GamesRadar::InvalidApiKeyError
       end
     end

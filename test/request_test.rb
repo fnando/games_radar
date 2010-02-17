@@ -29,4 +29,10 @@ class GamesRadar::GenreTest < Test::Unit::TestCase
     @request.prepare_params!(options)
     assert_equal "sport+games", options[:genre]
   end
+
+  def test_response_object
+    register_uri "/game/20060713144458560042?api_key=SxKuVse22qqUcZXq", "game.xml"
+    @request.request("/game/20060713144458560042") do |xml|
+    end
+  end
 end

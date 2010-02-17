@@ -93,6 +93,29 @@
                 </table>
               </div>
             </div>
+            <div id='attribute-list'>
+              <h2 class='section-bar'>Attributes</h2>
+              <div class='name-list'>
+                <table>
+                  <tr class='top-aligned-row context-row'>
+                    <td class='context-item-name'>response</td>
+                    <td class='context-item-value'>[RW]</td>
+                    <td class='context-item-desc'>
+                      
+                      Hold the latest response.
+                    </td>
+                  </tr>
+                  <tr class='top-aligned-row context-row'>
+                    <td class='context-item-name'>uri</td>
+                    <td class='context-item-value'>[RW]</td>
+                    <td class='context-item-desc'>
+                      
+                      Hold the latest uri.
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </div>
             <div id='methods'>
               <h2>Public instance methods</h2>
               <div class='method public-instance' id='method-M000002'>
@@ -112,7 +135,7 @@
                   <a class='source-toggle' href='#' onclick="toggleCode('M000002-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000002-source'>    <span class="ruby-comment cmt"># File lib/games_radar/request.rb, line 35</span>&#x000A;35:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">request</span>(<span class="ruby-identifier">path</span>, <span class="ruby-identifier">params</span> = {}, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)&#x000A;36:       <span class="ruby-identifier">uri</span> = <span class="ruby-identifier">uri_for</span>(<span class="ruby-identifier">path</span>, <span class="ruby-identifier">params</span>.<span class="ruby-identifier">dup</span>)&#x000A;37:       <span class="ruby-identifier">xml</span> = <span class="ruby-constant">Nokogiri</span><span class="ruby-operator">::</span><span class="ruby-constant">XML</span>(<span class="ruby-identifier">open</span>(<span class="ruby-identifier">uri</span>).<span class="ruby-identifier">read</span>)&#x000A;38: &#x000A;39:       <span class="ruby-identifier">handle_exceptions!</span> <span class="ruby-identifier">xml</span>&#x000A;40: &#x000A;41:       <span class="ruby-keyword kw">yield</span> <span class="ruby-identifier">xml</span>&#x000A;42:     <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000002-source'>    <span class="ruby-comment cmt"># File lib/games_radar/request.rb, line 43</span>&#x000A;43:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">request</span>(<span class="ruby-identifier">path</span>, <span class="ruby-identifier">params</span> = {}, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)&#x000A;44:       <span class="ruby-constant">GamesRadar</span><span class="ruby-operator">::</span><span class="ruby-constant">Request</span>.<span class="ruby-identifier">uri</span> = <span class="ruby-identifier">uri_for</span>(<span class="ruby-identifier">path</span>, <span class="ruby-identifier">params</span>.<span class="ruby-identifier">dup</span>)&#x000A;45:       <span class="ruby-constant">GamesRadar</span><span class="ruby-operator">::</span><span class="ruby-constant">Request</span>.<span class="ruby-identifier">response</span> = <span class="ruby-identifier">open</span>(<span class="ruby-constant">GamesRadar</span><span class="ruby-operator">::</span><span class="ruby-constant">Request</span>.<span class="ruby-identifier">uri</span>)&#x000A;46:       <span class="ruby-identifier">xml</span> = <span class="ruby-constant">Nokogiri</span><span class="ruby-operator">::</span><span class="ruby-constant">XML</span>(<span class="ruby-constant">GamesRadar</span><span class="ruby-operator">::</span><span class="ruby-constant">Request</span>.<span class="ruby-identifier">response</span>.<span class="ruby-identifier">read</span>)&#x000A;47: &#x000A;48:       <span class="ruby-identifier">handle_exceptions!</span> <span class="ruby-identifier">xml</span>&#x000A;49: &#x000A;50:       <span class="ruby-keyword kw">yield</span> <span class="ruby-identifier">xml</span>&#x000A;51:     <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
             </div>

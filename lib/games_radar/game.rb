@@ -35,8 +35,8 @@ module GamesRadar
       }.merge(options)
 
       request "/games", options do |xml|
-        total_rows = xml.at("total_rows").inner_text.to_i
-        items = xml.search("game").collect {|node| new(node) }
+        total_rows = xml.at("total_rows").text.to_i
+        items = xml.search("game").collect {|node| initialize_with_node node }
 
         GamesRadar::Result.new(
           :items     => items,
@@ -50,16 +50,21 @@ module GamesRadar
     def self.initialize_with_node(xml) # :nodoc:
       raise GamesRadar::GameNotFoundError unless xml.at("id")
 
-      new(
-        :id => xml.at("id").inner_text,
+      # First set up mandatory attributes
+      options = {
+        :id => xml.at("id").text,
         :name => {
-          :us => xml.at("name > us").inner_text,
-          :uk => xml.at("name > uk").inner_text
+          :us => xml.at("name > us").text,
+          :uk => xml.at("name > uk").text
         },
-        :platform => GamesRadar::Platform.new(xml.at("platform > id").inner_text),
-        :genre => GamesRadar::Genre.new(xml.at("genre > id").inner_text),
-        :description => Nokogiri(xml.at("description").inner_text).inner_text
-      )
+        :platform => GamesRadar::Platform.new(xml.at("platform > id").text)
+      }
+
+      # Then set up optional attributes
+      options[:genre] = GamesRadar::Genre.new(xml.at("genre > id").text) if xml.at("genre > id")
+      options[:description] = Nokogiri(xml.at("description").text).text if xml.at("description")
+
+      new(options)
     end
 
     # Return a game with the specified id.
