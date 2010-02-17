@@ -1,0 +1,50 @@
+= Introduction
+
+GamesRadar is an API wrapper for the games website GamesRadar[http://gamesradar.com]. For now it only supports basic functionality like game listing and game lookup.
+
+= Install
+
+  sudo gem install games_radar
+
+If you want the source go to http://github.com/fnando/games_radar
+
+= Usage
+
+  require "games_radar"
+
+  # Retrieve 50 games sorted by the newest titles
+  result = GamesRadar.all
+
+  result.each do |game|
+    p game.title
+    p game.description
+    p game.name
+    p game.platform
+    p game.genre
+  end
+
+  # Retrieve a game by its id
+  Game.find("20060713144458560042")
+
+  # Other usages
+  GamesRadar.all(:page => 10)
+  GamesRadar.all(:size => 30)
+  GamesRadar.all(:filter => "0-9")
+  GamesRadar.all(:sort => :updated)
+  GamesRadar.all(:genre => :sports)
+
+For full usage information, check it out the API (GamesRadar::Game#all).
+
+= License
+
+(The MIT License)
+
+Copyright © 2010:
+
+* Nando Vieira (http://simplesideias.com.br)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the ‘Software’), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED ‘AS IS’, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.

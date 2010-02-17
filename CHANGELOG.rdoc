@@ -1,0 +1,5 @@
+= Changelog
+
+== Feb 16 2010
+
+* Released version 0.1.0
