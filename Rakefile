@@ -39,3 +39,5 @@ JEWEL = Jeweler::Tasks.new do |gem|
   gem.add_dependency "nokogiri"
   gem.files =  FileList["{README,CHANGELOG}.rdoc", "{lib,test}/**/*"]
 end
+
+Jeweler::GemcutterTasks.new
