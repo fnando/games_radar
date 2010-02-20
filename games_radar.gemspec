@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{games_radar}
-  s.version = "0.1.1"
+  s.version = "0.1.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Nando Vieira"]
-  s.date = %q{2010-02-17}
+  s.date = %q{2010-02-20}
   s.description = %q{GamesRadar is an API wrapper for the games website http://gamesradar.com}
   s.email = %q{fnando.vieira@gmail.com}
   s.extra_rdoc_files = [
@@ -27,6 +27,7 @@ Gem::Specification.new do |s|
      "lib/games_radar/platform.rb",
      "lib/games_radar/request.rb",
      "lib/games_radar/result.rb",
+     "lib/games_radar/screenshot.rb",
      "lib/games_radar/version.rb",
      "test/config_test.rb",
      "test/game_test.rb",
@@ -40,6 +41,9 @@ Gem::Specification.new do |s|
      "test/resources/invalid_api_key.xml",
      "test/resources/no_games.xml",
      "test/resources/platforms.xml",
+     "test/resources/screenshots.xml",
+     "test/result_test.rb",
+     "test/screenshot_test.rb",
      "test/test_helper.rb"
   ]
   s.homepage = %q{http://github.com/fnando/games_radar}
@@ -54,6 +58,8 @@ Gem::Specification.new do |s|
      "test/genre_test.rb",
      "test/platform_test.rb",
      "test/request_test.rb",
+     "test/result_test.rb",
+     "test/screenshot_test.rb",
      "test/test_helper.rb"
   ]
 
