@@ -18,15 +18,30 @@ module GamesRadar
     # The game description
     attr_reader :description
 
-    # Retrieve the game list.
+    # Retrieve the game list. Return a GamesRadar::Result instance.
     #
     # == Options
     #
     # * +:filter+: filter the results by title. You can specify a letter from +a+ to +z+ or +0-9+.
     # * +:genre+: set the game genre. Can be +all+ or any value from GamesRadar::Genre::GENRES.
-    # * +:page+: set the current page. If a page is not found, an empty array will be returned.
+    # * +:page+: set the current page.
+    # * +:size+: set the page size. Can be +5+ or multiples of +10+ up to +50+.
     # * +:platform+: set the console platform. Can be +all+ or any code returned by GamesRadar::Platform#code
     # * +:sort+: specify how the result will be sorted. The available options are +newest+, +oldest+, +updated+, +asc+ and +desc+.
+    #
+    # == Examples
+    #
+    #   result = GamesRadar::Game.all
+    #   result = GamesRadar::Game.all(:filter => 'a')
+    #   result = GamesRadar::Game.all(:filter => '0-9')
+    #   result = GamesRadar::Game.all(:genre => :sports)
+    #   result = GamesRadar::Game.all(:page => 1)
+    #   result = GamesRadar::Game.all(:platform => :ps3)
+    #   result = GamesRadar::Game.all(:sort => :asc)
+    #
+    #   result.each do |game|
+    #     puts game.title
+    #   end
     def self.all(options = {})
       options = {
         :page => 1,
@@ -93,6 +108,32 @@ module GamesRadar
     # Return the US game as main title.
     def title
       name[:us]
+    end
+
+    # Retrieve the screenshot list. Return a GamesRadar::Result instance.
+    #
+    # == Options
+    #
+    # * +:region+: filter screenshots by region. Can be +us+ or +uk+.
+    # * +:page+: set the current page.
+    # * +:size+: set the page size. Can be +5+ or multiples of +10+ up to +50+.
+    def screenshots(options = {})
+      options = {
+        :region => :us,
+        :page => 1,
+        :size => GamesRadar::Config.page_size
+      }.merge(options)
+
+      request "/game/screenshots/:id", options.merge(:id => id) do |xml|
+        total_rows = xml.at("total_rows").text.to_i
+        items = xml.search("screenshot").collect {|node| GamesRadar::Screenshot.initialize_with_node node }
+
+        GamesRadar::Result.new(
+          :items     => items,
+          :page_size => options[:size],
+          :count     => total_rows
+        )
+      end
     end
   end
 end

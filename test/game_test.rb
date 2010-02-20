@@ -71,22 +71,14 @@ class GamesRadar::GameTest < Test::Unit::TestCase
     assert_equal 50, result.items.size
   end
 
-  def test_each
-    register_uri "/games?api_key=SxKuVse22qqUcZXq&page_size=50&page_num=1&sort=newest", "games.xml"
-    result = GamesRadar::Game.all
+  def test_screenshots
+    register_uri "/game/20060713144458560042?api_key=SxKuVse22qqUcZXq", "game.xml"
+    register_uri "/game/screenshots/20060713144458560042?page_num=1&page_size=50&api_key=SxKuVse22qqUcZXq&region=us", "screenshots.xml"
 
-    result.each do |game|
-      assert_kind_of GamesRadar::Game, game
-    end
-  end
+    game = GamesRadar::Game.find("20060713144458560042")
 
-  def test_each_with_index
-    register_uri "/games?api_key=SxKuVse22qqUcZXq&page_size=50&page_num=1&sort=newest", "games.xml"
-    result = GamesRadar::Game.all
-
-    result.each_with_index do |game, i|
-      assert_kind_of GamesRadar::Game, game
-      assert_kind_of Integer, i
-    end
+    assert_kind_of GamesRadar::Result, game.screenshots
+    assert_equal 50, game.screenshots.items.size
+    assert_kind_of GamesRadar::Screenshot, game.screenshots.items.first
   end
 end

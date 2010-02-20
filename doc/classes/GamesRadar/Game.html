@@ -51,6 +51,7 @@
             </ol>
             <h3>public instance</h3>
             <ol>
+              <li><a href="#M000012">screenshots</a></li>
               <li><a href="#M000011">title</a></li>
             </ol>
           </div>
@@ -121,7 +122,8 @@
                 </div>
                 <div class='description'>
                   <p>
-                  Retrieve the game list.
+                  Retrieve the game list. Return a <a
+                  href="Result.html">GamesRadar::Result</a> instance.
                   </p>
                   <h2>Options</h2>
                   <ul>
@@ -133,8 +135,11 @@
                   GamesRadar::Genre::GENRES.
                   
                   </li>
-                  <li><tt>:page</tt>: set the current page. If a page is not found, an empty
-                  array will be returned.
+                  <li><tt>:page</tt>: set the current page.
+                  
+                  </li>
+                  <li><tt>:size</tt>: set the page size. Can be <tt>5</tt> or multiples of
+                  <tt>10</tt> up to <tt>50</tt>.
                   
                   </li>
                   <li><tt>:platform</tt>: set the console platform. Can be <tt>all</tt> or any
@@ -147,12 +152,14 @@
                   
                   </li>
                   </ul>
+                  <h2>Examples</h2>
+                  <pre>result = GamesRadar::Game.all&#x000A;result = GamesRadar::Game.all(:filter =&gt; 'a')&#x000A;result = GamesRadar::Game.all(:filter =&gt; '0-9')&#x000A;result = GamesRadar::Game.all(:genre =&gt; :sports)&#x000A;result = GamesRadar::Game.all(:page =&gt; 1)&#x000A;result = GamesRadar::Game.all(:platform =&gt; :ps3)&#x000A;result = GamesRadar::Game.all(:sort =&gt; :asc)&#x000A;&#x000A;result.each do |game|&#x000A;  puts game.title&#x000A;end</pre>
                 </div>
                 <div class='source'>
                   <a class='source-toggle' href='#' onclick="toggleCode('M000008-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000008-source'>    <span class="ruby-comment cmt"># File lib/games_radar/game.rb, line 30</span>&#x000A;30:     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">all</span>(<span class="ruby-identifier">options</span> = {})&#x000A;31:       <span class="ruby-identifier">options</span> = {&#x000A;32:         <span class="ruby-identifier">:page</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">1</span>,&#x000A;33:         <span class="ruby-identifier">:size</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">GamesRadar</span><span class="ruby-operator">::</span><span class="ruby-constant">Config</span>.<span class="ruby-identifier">page_size</span>,&#x000A;34:         <span class="ruby-identifier">:sort</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">:newest</span>&#x000A;35:       }.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">options</span>)&#x000A;36: &#x000A;37:       <span class="ruby-identifier">request</span> <span class="ruby-value str">&quot;/games&quot;</span>, <span class="ruby-identifier">options</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">xml</span><span class="ruby-operator">|</span>&#x000A;38:         <span class="ruby-identifier">total_rows</span> = <span class="ruby-identifier">xml</span>.<span class="ruby-identifier">at</span>(<span class="ruby-value str">&quot;total_rows&quot;</span>).<span class="ruby-identifier">text</span>.<span class="ruby-identifier">to_i</span>&#x000A;39:         <span class="ruby-identifier">items</span> = <span class="ruby-identifier">xml</span>.<span class="ruby-identifier">search</span>(<span class="ruby-value str">&quot;game&quot;</span>).<span class="ruby-identifier">collect</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">node</span><span class="ruby-operator">|</span> <span class="ruby-identifier">initialize_with_node</span> <span class="ruby-identifier">node</span> }&#x000A;40: &#x000A;41:         <span class="ruby-constant">GamesRadar</span><span class="ruby-operator">::</span><span class="ruby-constant">Result</span>.<span class="ruby-identifier">new</span>(&#x000A;42:           <span class="ruby-identifier">:items</span>     =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">items</span>,&#x000A;43:           <span class="ruby-identifier">:page_size</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:size</span>],&#x000A;44:           <span class="ruby-identifier">:count</span>     =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">total_rows</span>&#x000A;45:         )&#x000A;46:       <span class="ruby-keyword kw">end</span>&#x000A;47:     <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000008-source'>    <span class="ruby-comment cmt"># File lib/games_radar/game.rb, line 45</span>&#x000A;45:     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">all</span>(<span class="ruby-identifier">options</span> = {})&#x000A;46:       <span class="ruby-identifier">options</span> = {&#x000A;47:         <span class="ruby-identifier">:page</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">1</span>,&#x000A;48:         <span class="ruby-identifier">:size</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">GamesRadar</span><span class="ruby-operator">::</span><span class="ruby-constant">Config</span>.<span class="ruby-identifier">page_size</span>,&#x000A;49:         <span class="ruby-identifier">:sort</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">:newest</span>&#x000A;50:       }.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">options</span>)&#x000A;51: &#x000A;52:       <span class="ruby-identifier">request</span> <span class="ruby-value str">&quot;/games&quot;</span>, <span class="ruby-identifier">options</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">xml</span><span class="ruby-operator">|</span>&#x000A;53:         <span class="ruby-identifier">total_rows</span> = <span class="ruby-identifier">xml</span>.<span class="ruby-identifier">at</span>(<span class="ruby-value str">&quot;total_rows&quot;</span>).<span class="ruby-identifier">text</span>.<span class="ruby-identifier">to_i</span>&#x000A;54:         <span class="ruby-identifier">items</span> = <span class="ruby-identifier">xml</span>.<span class="ruby-identifier">search</span>(<span class="ruby-value str">&quot;game&quot;</span>).<span class="ruby-identifier">collect</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">node</span><span class="ruby-operator">|</span> <span class="ruby-identifier">initialize_with_node</span> <span class="ruby-identifier">node</span> }&#x000A;55: &#x000A;56:         <span class="ruby-constant">GamesRadar</span><span class="ruby-operator">::</span><span class="ruby-constant">Result</span>.<span class="ruby-identifier">new</span>(&#x000A;57:           <span class="ruby-identifier">:items</span>     =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">items</span>,&#x000A;58:           <span class="ruby-identifier">:page_size</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:size</span>],&#x000A;59:           <span class="ruby-identifier">:count</span>     =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">total_rows</span>&#x000A;60:         )&#x000A;61:       <span class="ruby-keyword kw">end</span>&#x000A;62:     <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
               <div class='method public-class' id='method-M000009'>
@@ -171,7 +178,7 @@
                   <a class='source-toggle' href='#' onclick="toggleCode('M000009-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000009-source'>    <span class="ruby-comment cmt"># File lib/games_radar/game.rb, line 74</span>&#x000A;74:     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">id</span>)&#x000A;75:       <span class="ruby-identifier">request</span> <span class="ruby-value str">&quot;/game/:id&quot;</span>, <span class="ruby-identifier">:id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">id</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">xml</span><span class="ruby-operator">|</span>&#x000A;76:         <span class="ruby-constant">Game</span>.<span class="ruby-identifier">initialize_with_node</span>(<span class="ruby-identifier">xml</span>.<span class="ruby-identifier">search</span>(<span class="ruby-value str">&quot;game&quot;</span>))&#x000A;77:       <span class="ruby-keyword kw">end</span>&#x000A;78:     <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000009-source'>    <span class="ruby-comment cmt"># File lib/games_radar/game.rb, line 89</span>&#x000A;89:     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">id</span>)&#x000A;90:       <span class="ruby-identifier">request</span> <span class="ruby-value str">&quot;/game/:id&quot;</span>, <span class="ruby-identifier">:id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">id</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">xml</span><span class="ruby-operator">|</span>&#x000A;91:         <span class="ruby-constant">Game</span>.<span class="ruby-identifier">initialize_with_node</span>(<span class="ruby-identifier">xml</span>.<span class="ruby-identifier">search</span>(<span class="ruby-value str">&quot;game&quot;</span>))&#x000A;92:       <span class="ruby-keyword kw">end</span>&#x000A;93:     <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
               <div class='method public-class' id='method-M000010'>
@@ -190,10 +197,43 @@
                   <a class='source-toggle' href='#' onclick="toggleCode('M000010-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000010-source'>    <span class="ruby-comment cmt"># File lib/games_radar/game.rb, line 87</span>&#x000A;87:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">attrs</span> = {})&#x000A;88:       <span class="ruby-identifier">attrs</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">name</span>, <span class="ruby-identifier">value</span><span class="ruby-operator">|</span>&#x000A;89:         <span class="ruby-identifier">instance_variable_set</span>(<span class="ruby-node">&quot;@#{name}&quot;</span>, <span class="ruby-identifier">value</span>)&#x000A;90:       <span class="ruby-keyword kw">end</span>&#x000A;91:     <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000010-source'>     <span class="ruby-comment cmt"># File lib/games_radar/game.rb, line 102</span>&#x000A;102:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">attrs</span> = {})&#x000A;103:       <span class="ruby-identifier">attrs</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">name</span>, <span class="ruby-identifier">value</span><span class="ruby-operator">|</span>&#x000A;104:         <span class="ruby-identifier">instance_variable_set</span>(<span class="ruby-node">&quot;@#{name}&quot;</span>, <span class="ruby-identifier">value</span>)&#x000A;105:       <span class="ruby-keyword kw">end</span>&#x000A;106:     <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
               <h2>Public instance methods</h2>
+              <div class='method public-instance' id='method-M000012'>
+                <a name='M000012'></a>
+                <div class='synopsis'>
+                  <span class='name'>screenshots</span>
+                  <span class='arguments'>(options = {})</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Retrieve the screenshot list. Return a <a
+                  href="Result.html">GamesRadar::Result</a> instance.
+                  </p>
+                  <h2>Options</h2>
+                  <ul>
+                  <li><tt>:region</tt>: filter screenshots by region. Can be <tt>us</tt> or
+                  <tt>uk</tt>.
+                  
+                  </li>
+                  <li><tt>:page</tt>: set the current page.
+                  
+                  </li>
+                  <li><tt>:size</tt>: set the page size. Can be <tt>5</tt> or multiples of
+                  <tt>10</tt> up to <tt>50</tt>.
+                  
+                  </li>
+                  </ul>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000012-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000012-source'>     <span class="ruby-comment cmt"># File lib/games_radar/game.rb, line 120</span>&#x000A;120:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">screenshots</span>(<span class="ruby-identifier">options</span> = {})&#x000A;121:       <span class="ruby-identifier">options</span> = {&#x000A;122:         <span class="ruby-identifier">:region</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">:us</span>,&#x000A;123:         <span class="ruby-identifier">:page</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">1</span>,&#x000A;124:         <span class="ruby-identifier">:size</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">GamesRadar</span><span class="ruby-operator">::</span><span class="ruby-constant">Config</span>.<span class="ruby-identifier">page_size</span>&#x000A;125:       }.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">options</span>)&#x000A;126: &#x000A;127:       <span class="ruby-identifier">request</span> <span class="ruby-value str">&quot;/game/screenshots/:id&quot;</span>, <span class="ruby-identifier">options</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">:id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">id</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">xml</span><span class="ruby-operator">|</span>&#x000A;128:         <span class="ruby-identifier">total_rows</span> = <span class="ruby-identifier">xml</span>.<span class="ruby-identifier">at</span>(<span class="ruby-value str">&quot;total_rows&quot;</span>).<span class="ruby-identifier">text</span>.<span class="ruby-identifier">to_i</span>&#x000A;129:         <span class="ruby-identifier">items</span> = <span class="ruby-identifier">xml</span>.<span class="ruby-identifier">search</span>(<span class="ruby-value str">&quot;screenshot&quot;</span>).<span class="ruby-identifier">collect</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">node</span><span class="ruby-operator">|</span> <span class="ruby-constant">GamesRadar</span><span class="ruby-operator">::</span><span class="ruby-constant">Screenshot</span>.<span class="ruby-identifier">initialize_with_node</span> <span class="ruby-identifier">node</span> }&#x000A;130: &#x000A;131:         <span class="ruby-constant">GamesRadar</span><span class="ruby-operator">::</span><span class="ruby-constant">Result</span>.<span class="ruby-identifier">new</span>(&#x000A;132:           <span class="ruby-identifier">:items</span>     =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">items</span>,&#x000A;133:           <span class="ruby-identifier">:page_size</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:size</span>],&#x000A;134:           <span class="ruby-identifier">:count</span>     =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">total_rows</span>&#x000A;135:         )&#x000A;136:       <span class="ruby-keyword kw">end</span>&#x000A;137:     <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
               <div class='method public-instance' id='method-M000011'>
                 <a name='M000011'></a>
                 <div class='synopsis'>
@@ -209,7 +249,7 @@
                   <a class='source-toggle' href='#' onclick="toggleCode('M000011-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000011-source'>    <span class="ruby-comment cmt"># File lib/games_radar/game.rb, line 94</span>&#x000A;94:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">title</span>&#x000A;95:       <span class="ruby-identifier">name</span>[<span class="ruby-identifier">:us</span>]&#x000A;96:     <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000011-source'>     <span class="ruby-comment cmt"># File lib/games_radar/game.rb, line 109</span>&#x000A;109:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">title</span>&#x000A;110:       <span class="ruby-identifier">name</span>[<span class="ruby-identifier">:us</span>]&#x000A;111:     <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
             </div>

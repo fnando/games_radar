@@ -10,6 +10,7 @@ require "games_radar/game"
 require "games_radar/genre"
 require "games_radar/platform"
 require "games_radar/result"
+require "games_radar/screenshot"
 require "games_radar/version"
 
 module GamesRadar
