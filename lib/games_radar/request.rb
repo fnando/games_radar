@@ -82,7 +82,7 @@ module GamesRadar
 
       params.merge!(:api_key => GamesRadar::Config.api_key)
 
-      params.each do |name, value|
+      params.dup.each do |name, value|
         name = PARAMS[name.to_sym] || name.to_sym
         value = value.to_s.to_sym
 
