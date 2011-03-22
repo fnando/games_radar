@@ -39,7 +39,7 @@ For full usage information, check it out the API (GamesRadar::Game#all).
 
 (The MIT License)
 
-Copyright © 2010:
+Copyright © 2011:
 
 * Nando Vieira (http://simplesideias.com.br)
 
