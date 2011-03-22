@@ -3,17 +3,18 @@ require "nokogiri"
 require "open-uri"
 require "uri"
 
-require "games_radar/request"
-require "games_radar/config"
-require "games_radar/errors"
-require "games_radar/game"
-require "games_radar/genre"
-require "games_radar/platform"
-require "games_radar/result"
-require "games_radar/screenshot"
-require "games_radar/version"
-
 module GamesRadar
+  require "games_radar/errors"
+
+  autoload :Request     , "games_radar/request"
+  autoload :Config      , "games_radar/config"
+  autoload :Game        , "games_radar/game"
+  autoload :Genre       , "games_radar/genre"
+  autoload :Platform    , "games_radar/platform"
+  autoload :Result      , "games_radar/result"
+  autoload :Screenshot  , "games_radar/screenshot"
+  autoload :Version     , "games_radar/version"
+
   # Use this shortcut for GamesRadar::Config. Refer to the GamesRadar::Config
   # for all available options.
   #
